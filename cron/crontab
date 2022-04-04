@@ -1,0 +1,16 @@
+# /etc/cron.d/PLUGINNAME: plugin crontab
+# Unlike any other crontab you don't have to run the `crontab'
+# command to install the new version when you edit this file
+# and files in /etc/cron.d. These files also have username fields,
+# that none of the other crontabs do.
+#
+# Documentation: 
+# https://www.loxwiki.eu/pages/viewpage.action?pageId=23462653#Pluginf%C3%BCrdenLoxberryentwickeln(abVersion1.x)-Unterverzeichnis:cronYellowOptional
+#
+
+MAILTO=""
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+# m h dom mon dow user  command
+0   0  * * * loxberry $LBPBIN/intercom22lox/intercom-gen2-backup-pictures.sh  > /dev/null 2>&1
