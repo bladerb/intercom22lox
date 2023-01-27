@@ -1,8 +1,10 @@
 $( document ).ready(function() {
-
-	$.getJSON( "/plugins/intercom22lox/getpicture.php", function( data ) {
-		console.log(data.image);
-		$('.lastpicture').attr('src',data.image);
+	$('.msg').text("Loading last picture...");
+		$.getJSON( "/plugins/intercom22lox/getpicture.php?hook=false", function( data ) {
+		if(data.success){
+			$('.lastpicture').attr('src',data.image);
+		}else{
+			$('.msg').text("Error Loading Picture from Intercom");
+		}
 	});
-
 });

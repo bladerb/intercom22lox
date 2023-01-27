@@ -1,24 +1,50 @@
 <?php
-
 require_once "loxberry_io.php";
 require_once "loxberry_system.php";
 require_once "phpMQTT/phpMQTT.php";
 
+$miniserver_config = LBSystem::get_miniservers();
+
 
 if(file_exists(LBPDATADIR.'/data.json')){
 
+	header('Content-type:application/json;charset=utf-8');
 	$arr = json_decode(file_get_contents(LBPDATADIR.'/data.json'),true);
 
-	$output = shell_exec('./intercom-gen2-last-picture.sh');
+	$camurl="http://". $miniserver_config[1]["Admin_RAW"] .":". $miniserver_config[1]["Pass_RAW"] ."@". $arr["intercomip"]. "/mjpg/video.mjpg";
 
-	header('Content-type:application/json;charset=utf-8');
+	$boundary="\n--";
+	$f = fopen($camurl,"r") ;
+	$r="";
+	   if(!$f)
+	   {
+	        echo "error";
+	   }
+	    else
+	  {
+	         while (substr_count($r,"Content-Length") != 2) $r.=fread($f,512);
+	         $start = strpos($r,"\xff");
+	         $end   = strpos($r,$boundary,$start)-1;
+	         $frame = substr("$r",$start,$end - $start);
+
+         	if(!isset($_REQUEST['hook'])){ // archive nur wenn über hook call aufgerufen
+				$archiveimg = "archive/".date("Y.m.d-H:i:s")."-intercom.jpg";
+				file_put_contents($archiveimg, $frame);
+			}	
+	         file_put_contents("lastpicture.jpg", $frame);
+	   }
+	fclose($f);
+
 	$url = str_replace(basename($_SERVER['REQUEST_URI']), "", $_SERVER['REQUEST_URI']);
-	$json = json_encode(array("success"=>true,"image"=>'http://'.$_SERVER['HTTP_HOST'].$url.'lastpicture.jpg'));
+	$json = json_encode(array("success"=>true,"timestamp"=>date("d.m.Y-H:i:s"),"image"=>'http://'.$_SERVER['HTTP_HOST'].$url.'lastpicture.jpg'));
 	echo $json;
 	$jsonarr = json_decode($json,true);
 
 
-
+	// hook nicht aufrufen wenn aus webfrontend aufgerufen
+	if(isset($_REQUEST['hook'])){
+		exit;
+	}
 
 	// TODO abfrage wenn credentials noch nicht gestezt ueberspringen
 	if ( isset($arr['mqtt_enable']) ){

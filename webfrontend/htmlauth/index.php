@@ -15,7 +15,7 @@ $navbar[1]['URL'] = 'index.php';
 
 
 $navbar[2]['Name'] = $L['COMMON.BACKUP'];
-$navbar[2]['URL'] = 'backup.php';
+$navbar[2]['URL'] = 'archive.php';
  
 $navbar[3]['Name'] = $L['COMMON.NAVSETTINGS'];
 $navbar[3]['URL'] = 'settings.php';
@@ -33,6 +33,7 @@ LBWeb::lbheader($template_title, $helplink, $helptemplate);
     <h2><?=$L['COMMON.LASTPIC']?></h2>
     <p><?=$L['COMMON.INDEXTXT']?></p>
     <img src="" class="lastpicture" style="width:600px;">
+    <div class="msg"></div>
 
 
 

@@ -13,4 +13,3 @@ SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
 # m h dom mon dow user  command
-0   0  * * * loxberry $LBPBIN/intercom22lox/intercom-gen2-backup-pictures.sh  > /dev/null 2>&1
