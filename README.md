@@ -23,9 +23,9 @@ Vielen Dank an das Loxberry Forum speziell Laubi und hismastersvoice für die In
 
 ## todo 
 
+- Bild an TV senden (Android TV)
 - Timelapse Funktion jeden Tag ein Foto schießen zu bestimmter Uhrzeit
-- Bilder archiv
 - Bild alle X Sekunden mit Bilderkennung!? javscript library?
+- Bild bei Briefkaseten trigger (mehrere trigger ermöglichen)
 - aktuell geht das Auslesen nur für den ersten hinterlegten Miniserver
-- Bilder archiv Zeitstempel im html ausgeben
-- Bild bei Briefkasrten trigger
+- eine Einstellmöglichkeit, wo die Bilder genau landen (z.B. auf einem externen USB-Speicher)

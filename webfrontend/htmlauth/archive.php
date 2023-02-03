@@ -40,6 +40,17 @@ function show_pagination($current_page, $last_page){
     echo '</div>';
 }
 
+function getDateFromFilename($filename){
+    // /plugins/intercom22lox/archive/2023.01.27-21:19:27-intercom.jpg
+    $filename = str_replace("/plugins/intercom22lox/archive/","",$filename);
+    $filename = str_replace("-intercom.jpg","",$filename);
+    $filename_arr = explode("-",$filename);
+    $date_arr= explode(".",$filename_arr[0]);
+    $date = $date_arr[2].".".$date_arr[1].".".$date_arr[0];
+    $date = $date." - ".$filename_arr[1]." Uhr";
+    return $date;
+}
+
 
 ?>
 <script type="text/javascript" src="script.js"></script>
@@ -48,7 +59,7 @@ function show_pagination($current_page, $last_page){
 <p><?=$L['COMMON.BACKUPTXT']?></p>
 
 <style type="text/css">
-    .gallery img{
+    .gallery .container{
         width: 250px;
         float: left;
         margin: 5px;
@@ -61,23 +72,47 @@ function show_pagination($current_page, $last_page){
     .pagination a{
         text-decoration: none;
     }
-</style>
 
 
-  <style>
-    .image-container {
-/*      position: relative;*/
-    }
-    .image-overlay {
-        float:left;
-/*      position: absolute;
-      bottom: 0;
-      width: 100%;
-      background-color: rgba(255, 0, 0, 0.5);
-      color: white;
-      padding: 10px;
-      text-align: center;*/
-    }
+
+
+/* Container holding the image and the text */
+.container {
+    position: relative;
+    text-align: center;
+    color: white;
+    font-family: arial;
+    text-shadow: none;
+    font-weight: normal;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+
+
+/* Bottom right text */
+.bottom-right {
+    background-color: #000;
+    color:#fff;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    padding: 5px;
+}
+
+.bottom-left {
+    background-color: #000;
+    color:#fff;
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    padding: 5px;
+}
+
+
+
+
+
   </style>
 
 
@@ -114,13 +149,17 @@ if($max>$total){
         // echo '<img  src="'.$www_folder.basename($file).'" ><div>DATUM</div></a>';                
 
 ?>
-  <div class="image-container">
+
+
+<div class="container">
     <a rel="group" href="<?php echo $www_folder.basename($file); ?>" target="_blank">
-        <img src="<?php echo $www_folder.basename($file); ?>">
-        <!-- <div class="image-overlay">Hallo Welt</div> -->
+        <img src="<?php echo $www_folder.basename($file); ?>" style="width:100%;">
     </a>
-    
-  </div>
+  <div class="bottom-right"><?php echo getDateFromFilename($www_folder.basename($file)) ?></div>
+  <div class="bottom-left delbtn">X</div>
+</div>
+
+
 <?php
 
 
