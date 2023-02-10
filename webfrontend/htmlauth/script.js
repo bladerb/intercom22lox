@@ -18,4 +18,15 @@ $( document ).ready(function() {
 		
 	});
 
+	$(document).on('click', ".galleryvideo .delbtn",function(event){
+		var item = $(this).parents('.container');
+		var file = item.find('a').attr('href');
+		jQuery.getJSON('/admin/plugins/intercom22lox/ajax.php', {f: file,t:'video'}, function(json, textStatus) {
+		  item.remove();
+		});
+		
+	});
+
 });
+
+

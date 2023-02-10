@@ -5,6 +5,16 @@ require_once "phpMQTT/phpMQTT.php";
 
 $miniserver_config = LBSystem::get_miniservers();
 
+	
+function add_text_to_jpg($jpg_file, $text) {
+    $img = imagecreatefromjpeg($jpg_file);
+    $white = imagecolorallocate($img, 255, 255, 255);
+    $black = imagecolorallocate($img, 0, 0, 0);
+    imagefilledrectangle($img, 9, 29, strlen($text) * imagefontwidth(5) + 11, 45, $black);
+    imagestring($img, 5, 10, 30, $text, $white);
+    imagejpeg($img, $jpg_file);
+    imagedestroy($img);
+}
 
 if(file_exists(LBPDATADIR.'/data.json')){
 
@@ -16,23 +26,30 @@ if(file_exists(LBPDATADIR.'/data.json')){
 	$boundary="\n--";
 	$f = fopen($camurl,"r") ;
 	$r="";
-	   if(!$f)
-	   {
-	        echo "error";
-	   }
-	    else
-	  {
-	         while (substr_count($r,"Content-Length") != 2) $r.=fread($f,512);
-	         $start = strpos($r,"\xff");
-	         $end   = strpos($r,$boundary,$start)-1;
-	         $frame = substr("$r",$start,$end - $start);
+	if(!$f)
+	{
+	    echo "error";
+	}else{
+			while (substr_count($r,"Content-Length") != 2) $r.=fread($f,512);
+			$start = strpos($r,"\xff");
+			$end   = strpos($r,$boundary,$start)-1;
+			$frame = substr("$r",$start,$end - $start);
 
          	if(!isset($_REQUEST['hook'])){ // archive nur wenn über hook call aufgerufen
 				$archiveimg = "archive/".date("Y.m.d-H:i:s")."-intercom.jpg";
 				file_put_contents($archiveimg, $frame);
 			}	
-	         file_put_contents("lastpicture.jpg", $frame);
+			file_put_contents("lastpicture.jpg", $frame);
+
+			// add timestamp
+			if(isset($arr['timestamp_image'])){
+				if($arr['timestamp_image']=="on"){
+					$timestamp = date('d.m.Y H:i:s');
+					add_text_to_jpg("lastpicture.jpg", $timestamp);
+				}
+			}
 	   }
+
 	fclose($f);
 
 	$url = str_replace(basename($_SERVER['REQUEST_URI']), "", $_SERVER['REQUEST_URI']);
@@ -69,9 +86,11 @@ if(file_exists(LBPDATADIR.'/data.json')){
 		} 
 	}// end mqtt post
 
-	if(isset($arr['webhook1'])){
-		if($arr['webhook1']!=""){
-			$url = $arr['webhook1'];
+
+	foreach (array(1,3) as $key => $value)
+	if(isset($arr["webhook$value"])){
+		if($arr["webhook$value"]!=""){
+			$url = $arr["webhook$value"];
 			$ch = curl_init($url);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
 			curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
@@ -81,26 +100,13 @@ if(file_exists(LBPDATADIR.'/data.json')){
 		}
 	} // end webhook 1
 
-	if(isset($arr['webhook2'])){
-		if($arr['webhook2']!=""){
-
-			$url = $arr['webhook2'];
+	foreach (array(2,4) as $key => $value)
+	if(isset($arr["webhook$value"])){
+		if($arr["webhook$value"]!=""){
+			$url = $arr["webhook$value"];
 			$url = str_replace("<imgurl>", urlencode($jsonarr['image']) , $url);
-
 			file_get_contents($url);
-
-
 		}
 	} // end webhook2
 
 } // end json data exists
-
-
-
-// https://loxwiki.atlassian.net/wiki/spaces/LOXBERRY/pages/1239253670/mqtt+connectiondetails
-// daten automatisch vom mqtt plugin nehmen mqtt kram hiervon nehmen
-// https://github.com/romanlum/LoxBerry-Plugin-Zigbee2Mqtt/blob/master/bin/update-config.php
-// http://nas:8087/set/mqtt.0.devices.mirrorhtml?value=<imgurl>&prettyPrint
-
-// write mqttt data
-// MQTT requires a unique client id

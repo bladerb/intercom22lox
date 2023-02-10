@@ -11,18 +11,9 @@ $helptemplate = "help.html";
 $www_folder ="/plugins/intercom22lox/archive/";
 $folder = LBPHTMLDIR.'/archive/';
 
-// The Navigation Bar
-$navbar[1]['Name'] = $L['COMMON.NAVSTART'];
-$navbar[1]['URL'] = 'index.php';
-
-$navbar[2]['Name'] = $L['COMMON.BACKUP'];
-$navbar[2]['URL'] = 'archive.php';
-
-$navbar[3]['Name'] = $L['COMMON.NAVSETTINGS'];
-$navbar[3]['URL'] = 'settings.php';
-
+require_once "menu.php";
 // Activate the first element
-$navbar[2]['active'] = True;
+$navbar[3]['active'] = True;
   
 // Now output the header, it will include your navigation bar
 LBWeb::lbheader($template_title, $helplink, $helptemplate);
@@ -118,17 +109,16 @@ function getDateFromFilename($filename){
 
 <?php 
 
-$filetype = '*.*';    
+$filetype = '*.jpg';    
 $files = glob($folder.$filetype);    
 $files = array_reverse($files);
 $total = count($files);    
-$per_page = 20;    
+$per_page = 18;    
 $last_page = (int)($total / $per_page);    
 if(isset($_GET["page"])  && ($_GET["page"] <=$last_page) && ($_GET["page"] > 0) ){
     $page = $_GET["page"];
     $offset = ($per_page + 1)*($page - 1);      
 }else{
-    echo "Page out of range showing results for page one";
     $page=1;
     $offset=0;      
 }    
@@ -137,8 +127,8 @@ if($max>$total){
     $max = $total;
 }
 
-    echo "<b>".$L['COMMON.GALINFO1']."</b> $total - <b>".$L['COMMON.PAGE']."</b> $page/$last_page";        
-    show_pagination($page, $last_page);        
+echo "<b> ".$L['COMMON.GALINFO1']."</b> $total - <b>".$L['COMMON.PAGE']."</b> $page/$last_page";        
+show_pagination($page, $last_page);        
     
     ?><div class="gallery"> <?php
 
@@ -146,27 +136,20 @@ if($max>$total){
         $file = $files[$i];
         $path_parts = pathinfo($file);
         $filename = $path_parts['filename'];        
-        // echo '<img  src="'.$www_folder.basename($file).'" ><div>DATUM</div></a>';                
-
 ?>
 
-
-<div class="container">
-    <a rel="group" href="<?php echo $www_folder.basename($file); ?>" target="_blank">
-        <img src="<?php echo $www_folder.basename($file); ?>" style="width:100%;">
-    </a>
-  <div class="bottom-right"><?php echo getDateFromFilename($www_folder.basename($file)) ?></div>
-  <div class="bottom-left delbtn">X</div>
-</div>
-
+    <div class="container">
+        <a rel="group" href="<?php echo $www_folder.basename($file); ?>" target="_blank">
+            <img src="<?php echo $www_folder.basename($file); ?>" style="width:100%;">
+        </a>
+      <div class="bottom-right"><?php echo getDateFromFilename($www_folder.basename($file)) ?></div>
+      <div class="bottom-left delbtn">X</div>
+    </div>
 
 <?php
-
-
     }        
-    echo "</div>";
 
-
+echo "</div>";
 // Finally print the footer 
 LBWeb::lbfooter();
 ?>
