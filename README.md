@@ -10,6 +10,9 @@ https://www.loxforum.com/forum/hardware-zubeh%C3%B6r-sensorik/330121-loxone-inte
 https://www.loxforum.com/forum/hardware-zubeh%C3%B6r-sensorik/353631-warnung-loxone-intercom-gen-2-aktuell-bekannte-probleme#post356031
 
 
+## Installation
+
+Aktuelle Release URL in das URL Feld bei der Loxberry Plugininstallation kopieren.
 
 ## Funktionsumfang
 
