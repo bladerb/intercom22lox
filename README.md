@@ -42,7 +42,7 @@ Folgende Librarys wurden verwendet
 
 ## ChangeLog
 
-1.3.0
+1.3.1
 
 - ffmpeg hinzugefügt
 - Videoaufzeichnung kann über URL Trigger angestossen werden. Videolänge als Parameter.
