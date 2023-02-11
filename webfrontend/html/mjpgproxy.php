@@ -1,9 +1,8 @@
 <?php
-require_once "loxberry_io.php";
-require_once "loxberry_system.php";
+require_once "../../../htmlauth/plugins/intercom22lox/config.php";
 
 $miniserver_config = LBSystem::get_miniservers();
-$arr = json_decode(file_get_contents(LBPDATADIR.'/data.json'),true);
+$arr = json_decode(file_get_contents(LBPCONFIGDIR.'/data.json'),true);
 
 // config:
 $mjpeg_url="http://". $miniserver_config[1]["Admin_RAW"] .":". $miniserver_config[1]["Pass_RAW"] ."@". $arr["intercomip"]. "/mjpg/video.mjpg";

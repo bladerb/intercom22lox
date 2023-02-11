@@ -1,12 +1,11 @@
 <?php
-require_once "loxberry_web.php";
-require_once "loxberry_system.php";
+require_once "config.php";
 
 // This will read your language files to the array $L
 $L = LBSystem::readlanguage("language.ini");
 
 $template_title = "intercom22Lox";
-$helplink = "http://www.loxwiki.eu:80/x/2wzL";
+$helplink = "https://github.com/bladerb/intercom22lox/";
 $helptemplate = "help.html";
 
 require_once "menu.php";
@@ -16,7 +15,7 @@ $navbar[5]['active'] = True;
 // Now output the header, it will include your navigation bar
 LBWeb::lbheader($template_title, $helplink, $helptemplate);
  
-$jsonconfigfile = LBPDATADIR.'/data.json';
+$jsonconfigfile = LBPCONFIGDIR.'/data.json';
 
 $loxberryip = $_SERVER['HTTP_HOST'];
 

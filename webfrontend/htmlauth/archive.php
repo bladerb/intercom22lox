@@ -1,15 +1,14 @@
 <?php
-require_once "loxberry_web.php";
-require_once "loxberry_system.php";
+require_once "config.php";
+
 // This will read your language files to the array $L
 $L = LBSystem::readlanguage("language.ini");
 
 $template_title = "intercom22Lox";
-$helplink = "http://www.loxwiki.eu:80/x/2wzL";
+$helplink = "https://github.com/bladerb/intercom22lox/";
 $helptemplate = "help.html";
 
-$www_folder ="/plugins/intercom22lox/archive/";
-$folder = LBPHTMLDIR.'/archive/';
+$www_folder = str_replace("/opt/loxberry/webfrontend","",$folder_img_archive);
 
 require_once "menu.php";
 // Activate the first element
@@ -32,8 +31,7 @@ function show_pagination($current_page, $last_page){
 }
 
 function getDateFromFilename($filename){
-    // /plugins/intercom22lox/archive/2023.01.27-21:19:27-intercom.jpg
-    $filename = str_replace("/plugins/intercom22lox/archive/","",$filename);
+    $filename = basename($filename);
     $filename = str_replace("-intercom.jpg","",$filename);
     $filename_arr = explode("-",$filename);
     $date_arr= explode(".",$filename_arr[0]);
@@ -110,7 +108,7 @@ function getDateFromFilename($filename){
 <?php 
 
 $filetype = '*.jpg';    
-$files = glob($folder.$filetype);    
+$files = glob($folder_img_archive.$filetype);    
 $files = array_reverse($files);
 $total = count($files);    
 $per_page = 18;    

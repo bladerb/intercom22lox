@@ -42,6 +42,11 @@ Folgende Librarys wurden verwendet
 
 ## ChangeLog
 
+1.3.2
+
+- Einstellungen Verzeichnis gewechselt und Speicherung übersteht nun das Update
+- Alte Medien werden nach Update nun nicht mehr gelöscht
+
 1.3.1
 
 - ffmpeg hinzugefügt

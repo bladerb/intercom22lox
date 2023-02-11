@@ -1,15 +1,13 @@
 <?php
-require_once "loxberry_web.php";
-require_once "loxberry_system.php";
+require_once "config.php";
 // This will read your language files to the array $L
 $L = LBSystem::readlanguage("language.ini");
 
 $template_title = "intercom22Lox";
-$helplink = "http://www.loxwiki.eu:80/x/2wzL";
+$helplink = "https://github.com/bladerb/intercom22lox/";
 $helptemplate = "help.html";
 
-$www_folder ="/plugins/intercom22lox/videoarchive/";
-$folder = LBPHTMLDIR.'/videoarchive/';
+$www_folder = str_replace("/opt/loxberry/webfrontend","",$folder_video_archive);
 
 $loxberryip = $_SERVER['HTTP_HOST'];
 
@@ -34,8 +32,7 @@ function show_pagination($current_page, $last_page){
 }
 
 function getDateFromFilename($filename){
-    // /plugins/intercom22lox/archive/2023.01.27-21:19:27-intercom.jpg
-    $filename = str_replace("/plugins/intercom22lox/videoarchive/","",$filename);
+    $filename = basename($filename);
     $filename = str_replace("-intercom.jpg","",$filename);
     $filename_arr = explode("-",$filename);
 
@@ -118,7 +115,7 @@ function getDateFromFilename($filename){
 <?php 
 
 $filetype = '*.jpg';    
-$files = glob($folder.$filetype);    
+$files = glob($folder_video_archive.$filetype);    
 $files = array_reverse($files);
 $total = count($files);    
 $per_page = 20;    

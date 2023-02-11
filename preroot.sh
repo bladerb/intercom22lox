@@ -58,8 +58,8 @@ echo "<INFO> Plugin Log folder (on RAMDISK!) is: $PLOG"
 echo "<INFO> Plugin CONFIG folder is: $PCONFIG"
 
 
-cd /usr/local/bin
-wget https://github.com/vi/websocat/releases/download/v1.9.0/websocat_linuxarm32
-chmod 755 websocat_linuxarm32
-mv websocat_linuxarm32 websocat
-chmod +x websocat
+# cd /usr/local/bin
+# wget https://github.com/vi/websocat/releases/download/v1.9.0/websocat_linuxarm32
+# chmod 755 websocat_linuxarm32
+# mv websocat_linuxarm32 websocat
+# chmod +x websocat

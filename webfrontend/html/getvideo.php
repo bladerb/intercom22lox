@@ -1,6 +1,5 @@
 <?php
-require_once "loxberry_io.php";
-require_once "loxberry_system.php";
+require_once "../../../htmlauth/plugins/intercom22lox/config.php";
 
 ini_set('max_execution_time', 120);
 ini_set('display_errors', 1);
@@ -13,12 +12,11 @@ if(isset($_REQUEST['s']) && is_numeric($_REQUEST['s'])){
 }
 
 
-if(file_exists(LBPDATADIR.'/data.json')){
-	$arr = json_decode(file_get_contents(LBPDATADIR.'/data.json'),true);
+if(file_exists(LBPCONFIGDIR.'/data.json')){
+	$arr = json_decode(file_get_contents(LBPCONFIGDIR.'/data.json'),true);
 }
 
-$videofolder="./videoarchive/";
-$videofile = $videofolder.date("Y_m_d-H_i_s")."-SECONDSs-intercom.avi";
+$videofile = $folder_video_archive.date("Y_m_d-H_i_s")."-SECONDSs-intercom.avi";
 
 $videofile = str_replace("SECONDS",$seconds,$videofile);
 $video_tn_file = str_replace(".avi",".jpg",$videofile);

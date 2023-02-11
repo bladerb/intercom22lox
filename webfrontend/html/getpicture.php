@@ -1,7 +1,8 @@
 <?php
-require_once "loxberry_io.php";
-require_once "loxberry_system.php";
+
+require_once "../../../htmlauth/plugins/intercom22lox/config.php";
 require_once "phpMQTT/phpMQTT.php";
+
 
 $miniserver_config = LBSystem::get_miniservers();
 
@@ -16,10 +17,10 @@ function add_text_to_jpg($jpg_file, $text) {
     imagedestroy($img);
 }
 
-if(file_exists(LBPDATADIR.'/data.json')){
+if(file_exists(LBPCONFIGDIR.'/data.json')){
 
 	header('Content-type:application/json;charset=utf-8');
-	$arr = json_decode(file_get_contents(LBPDATADIR.'/data.json'),true);
+	$arr = json_decode(file_get_contents(LBPCONFIGDIR.'/data.json'),true);
 
 	$camurl="http://". $miniserver_config[1]["Admin_RAW"] .":". $miniserver_config[1]["Pass_RAW"] ."@". $arr["intercomip"]. "/mjpg/video.mjpg";
 
@@ -34,13 +35,9 @@ if(file_exists(LBPDATADIR.'/data.json')){
 			$start = strpos($r,"\xff");
 			$end   = strpos($r,$boundary,$start)-1;
 			$frame = substr("$r",$start,$end - $start);
-
-         	if(!isset($_REQUEST['hook'])){ // archive nur wenn über hook call aufgerufen
-				$archiveimg = "archive/".date("Y.m.d-H:i:s")."-intercom.jpg";
-				file_put_contents($archiveimg, $frame);
-			}	
+			
 			file_put_contents("lastpicture.jpg", $frame);
-
+			
 			// add timestamp
 			if(isset($arr['timestamp_image'])){
 				if($arr['timestamp_image']=="on"){
@@ -48,6 +45,20 @@ if(file_exists(LBPDATADIR.'/data.json')){
 					add_text_to_jpg("lastpicture.jpg", $timestamp);
 				}
 			}
+
+         	if(!isset($_REQUEST['hook'])){ // archive nur wenn über hook call aufgerufen
+				$archiveimg = $folder_img_archive.date("Y.m.d-H:i:s")."-intercom.jpg";
+				file_put_contents($archiveimg, $frame);
+
+				// add timestamp
+				if(isset($arr['timestamp_image'])){
+					if($arr['timestamp_image']=="on"){
+						$timestamp = date('d.m.Y H:i:s');
+						add_text_to_jpg($archiveimg, $timestamp);
+					}
+				}
+			}	
+
 	   }
 
 	fclose($f);

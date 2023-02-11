@@ -1,22 +1,13 @@
 <?php
-require_once "loxberry_web.php";
-
-$folder = LBPHTMLDIR.'/archive/';
-$foldervideo = LBPHTMLDIR.'/videoarchive/';
-
-// ini_set('display_errors', 1);
-// ini_set('display_startup_errors', 1);
-// error_reporting(E_ALL);
-
+require_once "config.php";
 
 if(isset($_REQUEST['f'])){
-
 
 	if(isset($_REQUEST['t'])){
 		// remove video and image
 		$file = $_REQUEST['f'];
 		$file = basename($file);
-		$file = $foldervideo.$file;
+		$file = $folder_video_archive.$file;
 		unlink($file);
 		unlink(str_replace(".avi",".jpg", $file));
 		echo json_encode( array("success"=>true));		
@@ -25,10 +16,9 @@ if(isset($_REQUEST['f'])){
 		// remove image
 		$file = $_REQUEST['f'];
 		$file = basename($file);
-		$file = $folder.$file;
+		$file = $folder_img_archive.$file;
 		unlink($file);
 		echo json_encode( array("success"=>true));		
 	}
-
 
 }
