@@ -14,8 +14,6 @@ mkdir -p /tmp/$ARGV1\_upgrade/config
 echo "<INFO> Backing up existing config files"
 cp -p -v -r $ARGV5/config/plugins/$ARGV3/ /tmp/$ARGV1\_upgrade/config
 
-echo "<INFO> Backing up old file structure config to existing config files"
-cp -p -v -r $ARGV5/data/plugins/$ARGV3/ /tmp/$ARGV1\_upgrade/config
 
 echo "<INFO> Backing up old media files"
 mkdir $ARGV5/webfrontend/legacy/intercom22lox_data/
