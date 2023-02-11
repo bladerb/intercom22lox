@@ -42,6 +42,10 @@ Folgende Librarys wurden verwendet
 
 ## ChangeLog
 
+1.3.3
+
+- update fix
+
 1.3.2
 
 - Einstellungen Verzeichnis gewechselt und Speicherung übersteht nun das Update
