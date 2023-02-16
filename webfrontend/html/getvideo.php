@@ -21,9 +21,6 @@ $videofile = $folder_video_archive.date("Y_m_d-H_i_s")."-SECONDSs-intercom.avi";
 $videofile = str_replace("SECONDS",$seconds,$videofile);
 $video_tn_file = str_replace(".avi",".jpg",$videofile);
 
-// $time= replaceSpecialFfmpegChars();
-
-// box=1:boxcolor=white
 
 $timestampstring ="";
 if(isset($arr['timestamp_video'])){
@@ -32,9 +29,7 @@ if(isset($arr['timestamp_video'])){
 	}
 }
 
-
 $videofilenameonly = basename($videofile);
-
 $hookstr=' ; wget http://'.$_SERVER['HTTP_HOST'].'/plugins/intercom22lox/videowebhook.php?file='.$videofilenameonly;
 
 $command = 	'(ffmpeg -f mjpeg -t '.$seconds.' -r 20 -i "http://'.$_SERVER['HTTP_HOST'].'/plugins/intercom22lox/mjpgproxy.php" '.$timestampstring.
@@ -49,8 +44,10 @@ shell_exec(sprintf('%s > /dev/null 2>&1 &', $command));
 header('Content-type:application/json;charset=utf-8');
 
 $url = str_replace(basename($_SERVER['REQUEST_URI']), "", $_SERVER['REQUEST_URI']);
+
 $videofile = str_replace("./","",$videofile);
 $videofile = 'http://'.$_SERVER['HTTP_HOST'].$url.$videofile;
+$videofile = str_replace("/plugins/intercom22lox//opt/loxberry/webfrontend","",$videofile);
 $json = json_encode(array("success"=>true,"timestamp"=>date("d.m.Y-H:i:s"),"videofile"=>$videofile,"length"=>$seconds));
 echo $json;
 
