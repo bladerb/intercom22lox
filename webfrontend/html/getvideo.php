@@ -33,9 +33,12 @@ if(isset($arr['timestamp_video'])){
 }
 
 
+$videofilenameonly = basename($videofile);
 
-$command = 	'(ffmpeg -f mjpeg -t '.$seconds.' -r 20 -i "http://192.168.86.3/plugins/intercom22lox/mjpgproxy.php" '.$timestampstring.
-			' -r 5 '.$videofile." ; ffmpeg -i $videofile -ss 00:00:02 -vframes 1 -q:v 2 $video_tn_file )";
+$hookstr=' ; wget http://'.$_SERVER['HTTP_HOST'].'/plugins/intercom22lox/videowebhook.php?file='.$videofilenameonly;
+
+$command = 	'(ffmpeg -f mjpeg -t '.$seconds.' -r 20 -i "http://'.$_SERVER['HTTP_HOST'].'/plugins/intercom22lox/mjpgproxy.php" '.$timestampstring.
+			' -r 5 '.$videofile." ; ffmpeg -i $videofile -ss 00:00:02 -vframes 1 -q:v 2 $video_tn_file ".$hookstr." )";
 
 // for debug
 // echo $command;exit;
