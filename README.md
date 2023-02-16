@@ -42,6 +42,10 @@ Folgende Librarys wurden verwendet
 
 ## ChangeLog
 
+1.3.5
+
+- Video Webhook funktionierte nicht wurde nun behoben
+
 1.3.4
 
 - Video Webhook (POST/GET/MQTT)
