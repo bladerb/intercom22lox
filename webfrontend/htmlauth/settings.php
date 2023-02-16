@@ -70,14 +70,14 @@ if($arr['timestamp_video']=="on") $arr['timestamp_video']=" checked ";
 		</fieldset>
 	<div>
 
-	<div class="wide">Webhooks</div>
+	<div class="wide">Image Webhooks</div>
 
 	<p><?= str_replace("LOXBERRYIP",$loxberryip,$L['COMMON.MANUAL2']); ?></p>
 
 	<div data-role="fieldcontain">
 		<label for="webhook1">Webhook 1 (POST)</label>
 		<input type="text" name="webhook1" value="<?php echo $arr['webhook1']; ?>">
-		<p class="hint">POST JSON String to givn URL equals result from <a href="http://<?= $loxberryip; ?>/plugins/intercom22lox/getpicture.php" target="_blank">http://<?= $loxberryip; ?>/plugins/intercom22lox/getpicture.php</a></p>
+		<p class="hint">POST JSON String to given URL equals result from <a href="http://<?= $loxberryip; ?>/plugins/intercom22lox/getpicture.php" target="_blank">http://<?= $loxberryip; ?>/plugins/intercom22lox/getpicture.php</a></p>
 	</div>
 
 
@@ -90,14 +90,31 @@ if($arr['timestamp_video']=="on") $arr['timestamp_video']=" checked ";
 	<div data-role="fieldcontain">
 		<label for="webhook3">Webhook 3 (POST)</label>
 		<input type="text" name="webhook3" value="<?php echo $arr['webhook3']; ?>">
-		<p class="hint">POST JSON String to givn URL equals result from <a href="http://<?= $loxberryip; ?>/plugins/intercom22lox/getpicture.php" target="_blank">http://<?= $loxberryip; ?>/plugins/intercom22lox/getpicture.php</a></p>
+		<p class="hint">POST JSON String to given URL equals result from <a href="http://<?= $loxberryip; ?>/plugins/intercom22lox/getpicture.php" target="_blank">http://<?= $loxberryip; ?>/plugins/intercom22lox/getpicture.php</a></p>
 	</div>
-
 
 	<div data-role="fieldcontain">
 		<label for="webhook4">Webhook 4 (GET)</label>
 		<input type="text" name="webhook4" value="<?php echo $arr['webhook4']; ?>">
 		<p class="hint">GET Params use &lt;imgurl&gt; in url params for imageurl. Example: http://192.168.86.2:8087/myservice/?value=&lt;imgurl&gt;</p>
+	</div>
+
+
+	<div class="wide">Video Webhooks</div>
+
+	<p><?= str_replace("LOXBERRYIP",$loxberryip,$L['COMMON.MANUAL4']); ?></p>
+
+	<div data-role="fieldcontain">
+		<label for="videowebhook1">Video Webhook 1 (POST)</label>
+		<input type="text" name="videowebhook1" value="<?php echo $arr['videowebhook1']; ?>">
+		<p class="hint">POST JSON String to given URL equals result from <a href="http://<?= $loxberryip; ?>/plugins/intercom22lox/getvideo.php?s=10" target="_blank">http://<?= $loxberryip; ?>/plugins/intercom22lox/getvideo.php?s=10</a></p>
+	</div>
+
+
+	<div data-role="fieldcontain">
+		<label for="videowebhook2">Video Webhook 2 (GET)</label>
+		<input type="text" name="videowebhook2" value="<?php echo $arr['videowebhook2']; ?>">
+		<p class="hint">GET Params use &lt;imgurl&gt; in url params for video fileurl. Example: http://192.168.86.2:8087/myservice/?value=&lt;fileurl&gt;</p>
 	</div>
 
 
