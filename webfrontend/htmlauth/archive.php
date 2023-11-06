@@ -16,6 +16,18 @@ $navbar[3]['active'] = True;
   
 // Now output the header, it will include your navigation bar
 LBWeb::lbheader($template_title, $helplink, $helptemplate);
+
+
+if(isset($_REQUEST['submit'])){
+    $filetype = '*.jpg';    
+    $files = glob($folder_img_archive.$filetype);    
+    $files = array_reverse($files);
+    foreach($files as $file){
+        @unlink($file);
+    }
+    echo $L['COMMON.DELETEALLSUCCESS'];
+}
+
  
 
 function show_pagination($current_page, $last_page){
@@ -43,6 +55,7 @@ function getDateFromFilename($filename){
 
 ?>
 <script type="text/javascript" src="script.js"></script>
+<div style="display:none;" id="DELALLCONFIRM"><?=$L['COMMON.DELALLCONFIRM']?></div>
 <h1><?=$L['COMMON.HELLO']?></h1>
 <h2><?=$L['COMMON.BACKUP']?></h2>
 <p><?=$L['COMMON.BACKUPTXT']?></p>
@@ -104,7 +117,7 @@ function getDateFromFilename($filename){
 
   </style>
 
-
+<input type="button" name="button" id="delallimg" value="<?=$L['COMMON.DELETEALL']?>">
 <?php 
 
 $filetype = '*.jpg';    

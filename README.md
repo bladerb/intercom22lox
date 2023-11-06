@@ -42,6 +42,10 @@ Folgende Librarys wurden verwendet
 
 ## ChangeLog
 
+1.3.6
+
+- FUntionalität für das Löschen aller Bilder / Videos hinzugefügt.
+
 1.3.5
 
 - Video Webhook funktionierte nicht wurde nun behoben

@@ -17,7 +17,20 @@ $navbar[4]['active'] = True;
   
 // Now output the header, it will include your navigation bar
 LBWeb::lbheader($template_title, $helplink, $helptemplate);
- 
+
+
+
+if(isset($_REQUEST['submit'])){
+    $filetype = '*.jpg';    
+    $files = glob($folder_video_archive.$filetype);    
+    $files = array_reverse($files);
+    foreach($files as $file){
+        $file2 = str_replace(".jpg",".avi",$file);
+        @unlink($file);
+    }
+    echo $L['COMMON.DELETEALLSUCCESS'];
+}
+
 
 function show_pagination($current_page, $last_page){
     global $L;
@@ -45,6 +58,7 @@ function getDateFromFilename($filename){
 
 ?>
 <script type="text/javascript" src="script.js"></script>
+<div style="display:none;" id="DELALLCONFIRM"><?=$L['COMMON.DELALLCONFIRM']?></div>
 <h1><?=$L['COMMON.HELLO']?></h1>
 <h2><?=$L['COMMON.BACKUPVIDEO']?></h2>
 <p><?=$L['COMMON.BACKUPVIDEOTXT']?></p>
@@ -110,6 +124,8 @@ function getDateFromFilename($filename){
 
 
   </style>
+
+    <input type="button" name="button" id="delallvideo" value="<?=$L['COMMON.DELETEALL']?>">
 
 
 <?php 

@@ -27,6 +27,27 @@ $( document ).ready(function() {
 		
 	});
 
+
+	$(document).on('click', "#delallvideo",function(event){
+		const response = confirm( jQuery('#DELALLCONFIRM').text() );
+        if (response) {
+        	jQuery.post('/admin/plugins/intercom22lox/videoarchive.php?submit=true', function( data ) {
+        		location.reload();
+			});
+        }
+	});
+
+	$(document).on('click', "#delallimg",function(event){
+		const response = confirm( jQuery('#DELALLCONFIRM').text() );
+        if (response) {
+        	jQuery.post('/admin/plugins/intercom22lox/archive.php?submit=true', function( data ) {
+        		location.reload();
+			});
+        }
+	});
+
+
+
 });
 
 
