@@ -78,7 +78,7 @@ if(file_exists(LBPCONFIGDIR.'/data.json')){
 	if ( isset($arr['mqtt_enable']) ){
 		if ( $arr['mqtt_enable']=="1" ){
 			//MQTT parameter
-			if ($arr['mqtt_uselocal']=="1") {
+			if (!isset($arr['mqtt_uselocal']) || $arr['mqtt_uselocal']=="1") {
 			    $creds = mqtt_connectiondetails();
 			} else {
 			    $creds['brokerhost'] = $arr['mqtt_server'];
