@@ -31,7 +31,7 @@ LBWeb::lbheader($template_title, $helplink, $helptemplate);
 <p><a href="http://<?= $loxberryip; ?>/plugins/intercom22lox/mjpgproxy.php" target="_blank">http://<?= $loxberryip; ?>/plugins/intercom22lox/mjpgproxy.php</a></p>
 
 
-<iframe src="http://<?= $loxberryip; ?>/plugins/intercom22lox/mjpgproxy.php" style="width: 1280px; height: 720px;">
+<img src="http://<?= $loxberryip; ?>/plugins/intercom22lox/mjpgproxy.php" alt="Intercom Live" style="max-width: 960px; width: 75%; height: auto; display: block; margin: 0 auto;">
 
 
 
