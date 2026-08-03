@@ -8,6 +8,10 @@ $miniserver_config = LBSystem::get_miniservers();
 
 	
 function add_text_to_jpg($jpg_file, $text) {
+    // php-gd ist nicht auf jedem LoxBerry vorhanden. Ohne diese Abfrage
+    // bricht der komplette Bildabruf mit einem Fatal Error ab, statt das
+    // Bild einfach ohne Zeitstempel zu speichern.
+    if (!function_exists('imagecreatefromjpeg')) { return; }
     $img = imagecreatefromjpeg($jpg_file);
     $white = imagecolorallocate($img, 255, 255, 255);
     $black = imagecolorallocate($img, 0, 0, 0);
@@ -46,25 +50,35 @@ if(file_exists(LBPCONFIGDIR.'/data.json')){
 				}
 			}
 
+			$archived = false;
+			$archive_error = "";
          	if(!isset($_REQUEST['hook'])){ // archive nur wenn über hook call aufgerufen
 				$archiveimg = $folder_img_archive.date("Y.m.d-H:i:s")."-intercom.jpg";
-				file_put_contents($archiveimg, $frame);
-
-				// add timestamp
-				if(isset($arr['timestamp_image'])){
-					if($arr['timestamp_image']=="on"){
-						$timestamp = date('d.m.Y H:i:s');
-						add_text_to_jpg($archiveimg, $timestamp);
+				// Schreibfehler (volle SD-Karte, fehlende Rechte) blieben bisher
+				// unbemerkt: die Antwort meldete Erfolg, das Archiv blieb leer.
+				$written = @file_put_contents($archiveimg, $frame);
+				if($written === false){
+					$archive_error = "Archivbild konnte nicht geschrieben werden: ".$archiveimg;
+				}else{
+					$archived = true;
+					// add timestamp
+					if(isset($arr['timestamp_image'])){
+						if($arr['timestamp_image']=="on"){
+							$timestamp = date('d.m.Y H:i:s');
+							add_text_to_jpg($archiveimg, $timestamp);
+						}
 					}
 				}
-			}	
+			}else{
+				$archive_error = "Nicht archiviert: Aufruf mit ?hook-Parameter (nur Vorschau).";
+			}
 
 	   }
 
 	fclose($f);
 
 	$url = str_replace(basename($_SERVER['REQUEST_URI']), "", $_SERVER['REQUEST_URI']);
-	$json = json_encode(array("success"=>true,"timestamp"=>date("d.m.Y-H:i:s"),"image"=>'http://'.$_SERVER['HTTP_HOST'].$url.'lastpicture.jpg'));
+	$json = json_encode(array("success"=>true,"timestamp"=>date("d.m.Y-H:i:s"),"archived"=>(isset($archived)?$archived:false),"archive_info"=>(isset($archive_error)?$archive_error:""),"image"=>'http://'.$_SERVER['HTTP_HOST'].$url.'lastpicture.jpg'));
 	echo $json;
 	$jsonarr = json_decode($json,true);
 
