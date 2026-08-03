@@ -70,6 +70,51 @@ if($arr['timestamp_video']=="on") $arr['timestamp_video']=" checked ";
 		</fieldset>
 	<div>
 
+	<div class="wide">Speicherort</div>
+
+	<div data-role="fieldcontain">
+		<label for="storage_path">Eigener Speicherpfad</label>
+		<input type="text" name="storage_path" value="<?php echo isset($arr['storage_path']) ? $arr['storage_path'] : ''; ?>">
+		<p class="hint">Leer lassen = alles auf der SD-Karte. Wird hier ein beschreibbarer Pfad angegeben
+		(z.B. /media/usbstick), zeigt der Archivordner per Symlink dorthin - vorhandene Aufnahmen werden
+		einmalig mit umgezogen. Schont die SD-Karte.</p>
+	</div>
+
+
+	<div class="wide">Aufbewahrung</div>
+
+	<div data-role="fieldcontain">
+		<label for="cleanup_days">Aufnahmen loeschen nach (Tagen)</label>
+		<input type="number" name="cleanup_days" min="0" max="3650" value="<?php echo isset($arr['cleanup_days']) ? $arr['cleanup_days'] : '0'; ?>">
+		<p class="hint">0 = nie automatisch loeschen.</p>
+	</div>
+
+	<div data-role="fieldcontain">
+		<label for="cleanup_count">Hoechstzahl aufbewahrter Aufnahmen</label>
+		<input type="number" name="cleanup_count" min="0" value="<?php echo isset($arr['cleanup_count']) ? $arr['cleanup_count'] : ''; ?>">
+		<p class="hint">Zusaetzliche Obergrenze je Archiv. 0 oder leer = keine Begrenzung.</p>
+	</div>
+
+
+	<div class="wide">Zeitraffer</div>
+
+	<div data-role="fieldcontain">
+		<fieldset data-role="controlgroup">
+			<legend>Taeglich ein Bild zu fester Uhrzeit</legend>
+			<input type="checkbox" name="timelapse_enable" id="timelapse_enable" <?php echo (isset($arr['timelapse_enable']) && $arr['timelapse_enable']=="on") ? ' checked ' : ''; ?>>
+			<label for="timelapse_enable">Zeitraffer aktivieren</label>
+			<input type="checkbox" name="timelapse_video" id="timelapse_video" <?php echo (isset($arr['timelapse_video']) && $arr['timelapse_video']=="on") ? ' checked ' : ''; ?>>
+			<label for="timelapse_video">Nach jeder Aufnahme ein Video aus allen Bildern erzeugen (benoetigt ffmpeg)</label>
+		</fieldset>
+	</div>
+
+	<div data-role="fieldcontain">
+		<label for="timelapse_time">Uhrzeit</label>
+		<input type="text" name="timelapse_time" value="<?php echo isset($arr['timelapse_time']) ? $arr['timelapse_time'] : '12:00'; ?>">
+		<p class="hint">Format HH:MM, z.B. 12:00</p>
+	</div>
+
+
 	<div class="wide">Image Webhooks</div>
 
 	<p><?= str_replace("LOXBERRYIP",$loxberryip,$L['COMMON.MANUAL2']); ?></p>
