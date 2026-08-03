@@ -70,6 +70,52 @@ if($arr['timestamp_video']=="on") $arr['timestamp_video']=" checked ";
 		</fieldset>
 	<div>
 
+	<div class="wide">Bild an ein Anzeigegeraet</div>
+
+	<div data-role="fieldcontain">
+		<fieldset data-role="controlgroup">
+			<legend>Beim Klingeln das Bild an einen Bildschirm senden</legend>
+			<input type="checkbox" name="tv_enable" id="tv_enable" <?php echo (isset($arr['tv_enable']) && $arr['tv_enable']=="on") ? ' checked ' : ''; ?>>
+			<label for="tv_enable">Aktivieren</label>
+		</fieldset>
+	</div>
+
+	<div data-role="fieldcontain">
+		<label for="tv_ip">Adresse des Geraets</label>
+		<input type="text" name="tv_ip" value="<?php echo isset($arr['tv_ip']) ? $arr['tv_ip'] : ''; ?>">
+		<p class="hint">Geraet mit der App "Notifications for Android TV". Leer = nichts senden.</p>
+	</div>
+
+	<div data-role="fieldcontain">
+		<label for="tv_port">Port</label>
+		<input type="text" name="tv_port" value="<?php echo isset($arr['tv_port']) ? $arr['tv_port'] : '7676'; ?>">
+		<p class="hint">Standard: 7676</p>
+	</div>
+
+
+	<div class="wide">Objekterkennung</div>
+
+	<div data-role="fieldcontain">
+		<fieldset data-role="controlgroup">
+			<legend>Erkennen, was auf dem Bild zu sehen ist</legend>
+			<input type="checkbox" name="ai_enable" id="ai_enable" <?php echo (isset($arr['ai_enable']) && $arr['ai_enable']=="on") ? ' checked ' : ''; ?>>
+			<label for="ai_enable">Aktivieren</label>
+		</fieldset>
+	</div>
+
+	<div data-role="fieldcontain">
+		<label for="ai_url">Adresse des Erkennungsdienstes</label>
+		<input type="text" name="ai_url" value="<?php echo isset($arr['ai_url']) ? $arr['ai_url'] : ''; ?>">
+		<p class="hint">CodeProject.AI oder DeepStack, z.B. http://192.168.1.60:32168/v1/vision/detection
+		Das Bild wird nur an diese Adresse geschickt und verlaesst das Heimnetz nicht.</p>
+	</div>
+
+	<div data-role="fieldcontain">
+		<label for="ai_minconf">Mindestsicherheit in Prozent</label>
+		<input type="number" name="ai_minconf" min="1" max="99" value="<?php echo isset($arr['ai_minconf']) ? $arr['ai_minconf'] : '50'; ?>">
+	</div>
+
+
 	<div class="wide">Image Webhooks</div>
 
 	<p><?= str_replace("LOXBERRYIP",$loxberryip,$L['COMMON.MANUAL2']); ?></p>
