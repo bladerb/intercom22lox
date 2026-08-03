@@ -13,3 +13,9 @@ SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
 # m h dom mon dow user  command
+# Timelapse: prueft minuetlich, ob die konfigurierte Uhrzeit erreicht ist
+# (beendet sich sofort, wenn Timelapse deaktiviert ist)
+* * * * * loxberry cd REPLACELBHOMEDIR/webfrontend/html/plugins/REPLACELBPPLUGINDIR && /usr/bin/php timelapse.php >/dev/null 2>&1
+# Archiv-Bereinigung: loescht taeglich alte/ueberzaehlige Archivdateien
+# (beendet sich sofort, wenn keine Begrenzung konfiguriert ist)
+35 3 * * * loxberry cd REPLACELBHOMEDIR/webfrontend/html/plugins/REPLACELBPPLUGINDIR && /usr/bin/php cleanup.php >/dev/null 2>&1
